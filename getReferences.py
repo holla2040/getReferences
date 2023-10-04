@@ -19,6 +19,7 @@ import adsk.core, adsk.fusion, adsk.cam, traceback
 
 debug = False
 loggerFile = False
+logFilename = "/Users/holla/Documents/log.txt"
 
 class UiLogger:
     def __init__(self, forceUpdate):  
@@ -55,19 +56,25 @@ def scanFiles(project,folder,path):
             logger.print(path+"/"+datafile.name)
         if datafile.hasChildReferences:
             for c in range(len(datafile.childReferences)):
-                childProjectName = str(datafile.childReferences.item(c).parentProject.name)
-                if childProjectName != project.name:
-                    logger.print(" uses **    " + childProjectName+"   "+ str(datafile.childReferences.item(c).name))
-                else:
-                    logger.print(" uses       " + childProjectName+"   "+ str(datafile.childReferences.item(c).name))
+                try:
+                    childProjectName = str(datafile.childReferences.item(c).parentProject.name)
+                    if childProjectName != project.name:
+                        logger.print(" uses **    " + childProjectName+"   "+ str(datafile.childReferences.item(c).name))
+                    else:
+                        logger.print(" uses       " + childProjectName+"   "+ str(datafile.childReferences.item(c).name))
+                except:
+                    logger.print("  error in childReference")
         if datafile.hasParentReferences:
             for p in range(len(datafile.parentReferences)):
-                parentName = str(datafile.parentReferences.item(p).name)
-                parentProjectName = str(datafile.parentReferences.item(p).parentProject.name)
-                if parentProjectName != project.name:
-                    logger.print(" used in ** " + parentProjectName+"   "+ str(datafile.parentReferences.item(p).name))
-                else:
-                    logger.print(" used in    " + parentProjectName+"   "+ str(datafile.parentReferences.item(p).name))
+                try:
+                    parentName = str(datafile.parentReferences.item(p).name)
+                    parentProjectName = str(datafile.parentReferences.item(p).parentProject.name)
+                    if parentProjectName != project.name:
+                        logger.print(" used in ** " + parentProjectName+"   "+ str(datafile.parentReferences.item(p).name))
+                    else:
+                        logger.print(" used in    " + parentProjectName+"   "+ str(datafile.parentReferences.item(p).name))
+                except:
+                    logger.print("  error in parentReference")
 
 def scanFolder(project,folder,path):
     scanFiles(project,folder,path)
@@ -76,7 +83,7 @@ def scanFolder(project,folder,path):
         scanFolder(project,childFolder,path+"/"+childFolder.name)
 
 if loggerFile:
-    logger = FileLogger("/Users/holla/Documents/log.txt")
+    logger = FileLogger(logFilename)
 else:
     logger = UiLogger(True)
 
