@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"script",
+	"author":	"Craig Hollabaugh",
+	"description":	{
+		"":	""
+	},
+	"supportedOS":	"windows",
+	"editEnabled":	true
+}
