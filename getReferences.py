@@ -75,7 +75,7 @@ def scanFolder(project,folder,path):
         childFolder = folder.dataFolders.item(i) 
         scanFolder(project,childFolder,path+"/"+childFolder.name)
 
-if FileLogger:
+if loggerFile:
     logger = FileLogger("/Users/holla/Documents/log.txt")
 else:
     logger = UiLogger(True)
