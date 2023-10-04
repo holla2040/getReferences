@@ -99,7 +99,6 @@ def run(context):
             folder = project.rootFolder
             scanFolder(project,folder,project.name)
             logger.print(  "--- scanning project \""+project.name+"\" done\n")
-            break
 
         logger.print("--- done ---")
     except:
